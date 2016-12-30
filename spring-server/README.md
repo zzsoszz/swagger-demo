@@ -13,6 +13,6 @@ The underlying library integrating swagger to SpringBoot is [springfox](https://
 Start your server as an simple java application  
 
 You can view the api documentation in swagger-ui by pointing to  
-http://localhost:8080/v2  
+http://localhost:8080/  
 
 Change default port value in application.properties

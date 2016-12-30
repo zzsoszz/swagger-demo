@@ -7,14 +7,13 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.model.Category;
 import io.swagger.model.Tag;
-import io.swagger.model.User;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Pet
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2016-12-30T06:10:24.293Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2016-12-30T09:14:30.852Z")
 
 public class Pet   {
   @JsonProperty("id")
@@ -22,9 +21,6 @@ public class Pet   {
 
   @JsonProperty("category")
   private Category category = null;
-
-  @JsonProperty("user")
-  private User user = null;
 
   @JsonProperty("name")
   private String name = null;
@@ -72,24 +68,6 @@ public class Pet   {
 
   public void setCategory(Category category) {
     this.category = category;
-  }
-
-  public Pet user(User user) {
-    this.user = user;
-    return this;
-  }
-
-   /**
-   * Get user
-   * @return user
-  **/
-  @ApiModelProperty(value = "")
-  public User getUser() {
-    return user;
-  }
-
-  public void setUser(User user) {
-    this.user = user;
   }
 
   public Pet name(String name) {
@@ -186,7 +164,6 @@ public class Pet   {
     Pet pet = (Pet) o;
     return Objects.equals(this.id, pet.id) &&
         Objects.equals(this.category, pet.category) &&
-        Objects.equals(this.user, pet.user) &&
         Objects.equals(this.name, pet.name) &&
         Objects.equals(this.photoUrls, pet.photoUrls) &&
         Objects.equals(this.tags, pet.tags) &&
@@ -195,7 +172,7 @@ public class Pet   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, category, user, name, photoUrls, tags, status);
+    return Objects.hash(id, category, name, photoUrls, tags, status);
   }
 
   @Override
@@ -205,7 +182,6 @@ public class Pet   {
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    category: ").append(toIndentedString(category)).append("\n");
-    sb.append("    user: ").append(toIndentedString(user)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    photoUrls: ").append(toIndentedString(photoUrls)).append("\n");
     sb.append("    tags: ").append(toIndentedString(tags)).append("\n");
