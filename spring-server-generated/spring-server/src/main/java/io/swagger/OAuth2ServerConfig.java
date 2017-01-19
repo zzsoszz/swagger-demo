@@ -60,18 +60,16 @@ public class OAuth2ServerConfig {
 	//AuthorizationEndpoint
 	private static final String SPARKLR_RESOURCE_ID = "sparklr";
 	
+	
 	@Configuration
 	@EnableResourceServer
 	protected static class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
-
 		@Override
 		public void configure(ResourceServerSecurityConfigurer resources) {
 			resources.resourceId(SPARKLR_RESOURCE_ID).stateless(false);
 		}
-
 		@Override
 		public void configure(HttpSecurity http) throws Exception {
-			// @formatter:off
 			http
 				// Since we want the protected resources to be accessible in the UI as well we need 
 				// session creation to be allowed (it's disabled by default in 2.0.6)
@@ -85,15 +83,10 @@ public class OAuth2ServerConfig {
 					.antMatchers("/photos/trusted/**").access("#oauth2.hasScope('trust')")
 					.antMatchers("/photos/user/**").access("#oauth2.hasScope('trust')")					
 					.antMatchers("/photos/**").access("#oauth2.hasScope('read') or (!#oauth2.isOAuth() and hasRole('ROLE_USER'))")
-					.regexMatchers(HttpMethod.DELETE, "/oauth/users/([^/].*?)/tokens/.*")
-						.access("#oauth2.clientHasRole('ROLE_CLIENT') and (hasRole('ROLE_USER') or #oauth2.isClient()) and #oauth2.hasScope('write')")
-					.regexMatchers(HttpMethod.GET, "/oauth/clients/([^/].*?)/users/.*")
-						.access("#oauth2.clientHasRole('ROLE_CLIENT') and (hasRole('ROLE_USER') or #oauth2.isClient()) and #oauth2.hasScope('read')")
-					.regexMatchers(HttpMethod.GET, "/oauth/clients/.*")
-						.access("#oauth2.clientHasRole('ROLE_CLIENT') and #oauth2.isClient() and #oauth2.hasScope('read')");
-			// @formatter:on
+					.regexMatchers(HttpMethod.DELETE, "/oauth/users/([^/].*?)/tokens/.*").access("#oauth2.clientHasRole('ROLE_CLIENT') and (hasRole('ROLE_USER') or #oauth2.isClient()) and #oauth2.hasScope('write')")
+					.regexMatchers(HttpMethod.GET, "/oauth/clients/([^/].*?)/users/.*").access("#oauth2.clientHasRole('ROLE_CLIENT') and (hasRole('ROLE_USER') or #oauth2.isClient()) and #oauth2.hasScope('read')")
+					.regexMatchers(HttpMethod.GET, "/oauth/clients/.*").access("#oauth2.clientHasRole('ROLE_CLIENT') and #oauth2.isClient() and #oauth2.hasScope('read')");
 		}
-
 	}
 	
 //	@Bean
@@ -122,7 +115,6 @@ public class OAuth2ServerConfig {
 
 		@Override
 		public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-			
 			// @formatter:off
 			//clients.inMemory()
 			clients.jdbc(dataSource())
@@ -169,10 +161,10 @@ public class OAuth2ServerConfig {
 		                .authorizedGrantTypes("implicit")
 		                .authorities("ROLE_CLIENT")
 		                .scopes("read", "write", "trust")
-		                .autoApprove(true);
+		                .autoApprove(true)
+		      ;
 			// @formatter:on
 		}
-
 		@Bean
 		public DataSource dataSource() {
 			 MysqlDataSource datasource = new MysqlDataSource() ;  
@@ -187,19 +179,15 @@ public class OAuth2ServerConfig {
 			 datasource.setPassword("");
 		     return datasource;
 		}
-		
 		@Bean
 		public TokenStore tokenStore() {
 			//return new InMemoryTokenStore();
 			 return new JdbcTokenStore(dataSource());
 		}
-
 		@Override
 		public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-			endpoints.tokenStore(tokenStore).userApprovalHandler(userApprovalHandler)
-					.authenticationManager(authenticationManager);
+			endpoints.tokenStore(tokenStore).userApprovalHandler(userApprovalHandler).authenticationManager(authenticationManager);
 		}
-
 		@Override
 		public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
 			oauthServer.realm("sparklr2/client");
@@ -208,7 +196,6 @@ public class OAuth2ServerConfig {
 	}
 
 	protected static class Stuff {
-
 		@Autowired
 		private ClientDetailsService clientDetailsService;
 
